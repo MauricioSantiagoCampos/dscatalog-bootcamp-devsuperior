@@ -1,11 +1,15 @@
 package com.devsuperior.dscatalog.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +21,12 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant createdAt;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant updatedAt;
 	
 // Construtores
 	
@@ -47,8 +57,28 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 	
-// equals and hashCode
+	public Instant getCreatedAt() {
+		return createdAt;
+	}	
 
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}	
+
+// Para gerar automaticamente o tempo quando for salvar ou fazer update no Banco de Dados
+	
+	@PrePersist
+	public void prePersist() {
+		createdAt = Instant.now();
+	}
+	
+	@PreUpdate
+	public void preUpdate() {
+		updatedAt = Instant.now();
+	}
+
+// equals and hashCode
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,14 +102,5 @@ public class Category implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
-	
-
-	
-	
-	
-	
-	
+	}	
 }
