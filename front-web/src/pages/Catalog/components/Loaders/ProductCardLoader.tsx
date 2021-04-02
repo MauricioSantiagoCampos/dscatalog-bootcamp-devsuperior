@@ -8,7 +8,8 @@ const ProductCardLoader = () => {
     return (
         <>            
             {loaderItems.map(item => (
-                <ContentLoader 
+                <ContentLoader
+                    key={item}
                     speed={1}
                     width={250}
                     height={335}
