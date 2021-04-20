@@ -19,8 +19,8 @@ const Routes = () => (
             <Route path="/products/:productId">
                 <ProductDetails />
             </Route>
-            <Route path="/admin">
-                <Redirect to="/admin/products" />
+            <Redirect from="/admin" to="/admin/products" exact />
+            <Route path="/admin">                
                 <Admin />
             </Route>
         </Switch>
